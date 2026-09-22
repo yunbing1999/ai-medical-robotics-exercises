@@ -2,13 +2,13 @@
 
 A short teaching notebook for **AI in Medical Robotics**. Explore labelled data, try a simple classification rule, and compare a chosen threshold with one fitted to the data.
 
-**Notebook:** [exercise_2_1_improved.ipynb](exercise_2_1_improved.ipynb)
+**Notebook:** [exercise_2_1_improved.ipynb](exercise_2_1.ipynb)
 
 No prior programming experience is required. Students run the cells, inspect the plots, and change a few values. Allow approximately 20 minutes for exploration and discussion.
 
 ## Run in Google Colab
 
-1. Download `exercise_2_1_improved.ipynb`.
+1. Download `exercise_2_1.ipynb`.
 2. Open [Google Colab](https://colab.research.google.com/).
 3. Choose **File → Upload notebook** and select the file.
 4. Run the cells from top to bottom using the play buttons or `Shift+Enter`.
