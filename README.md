@@ -6,6 +6,8 @@ A short teaching notebook for **AI in Medical Robotics**. Explore labelled data,
 
 No prior programming experience is required. Students run the cells, inspect the plots, and change a few values. Allow approximately 20 minutes for exploration and discussion.
 
+**Also available:** [Exercise 03 — Medical Imaging and AI](#exercise-03--medical-imaging-and-ai), covering chest X-ray classification and polyp segmentation.
+
 ## Run in Google Colab
 
 1. Download `exercise_2_1.ipynb`.
@@ -119,3 +121,66 @@ If a variable is undefined or results appear inconsistent, rerun the notebook fr
 Wolberg, W., Mangasarian, O., Street, N., & Street, W. (1993). *Breast Cancer Wisconsin (Diagnostic)* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B
 
 The notebook loads the dataset using `sklearn.datasets.load_breast_cancer`.
+
+---
+
+## Exercise 03 — Medical Imaging and AI
+
+**Notebook:** [exercise_3.ipynb](exercise_3.ipynb) · [Open in Google Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_3.ipynb)
+
+A teaching notebook for **AI in Medical Robotics, WS 2026/27**, Lecture 03. Explore which classification errors matter, what a model really learns, and which segmentation failures can hide behind a good average score.
+
+### Run in Google Colab
+
+1. Open the notebook using the Colab link above.
+2. Choose **Runtime → Change runtime type → T4 GPU** before running the cells.
+3. Run the cells from top to bottom using the play buttons or `Shift+Enter`, starting with **Setup**.
+4. Before the session, complete parts **1.0** and **2.0**. Fill in the short sections marked `YOUR CODE (home)`, run the check cells, and write predictions and answers on the exercise sheet.
+5. In class, run the notebook from the top using **Runtime → Run all**, then follow each activity and change the values marked `EDIT`.
+
+The check cells use reference implementations when the homework code is incomplete or incorrect, so students can still follow the activities. Use Colab's table of contents to jump to the matching section number on the exercise sheet and slides.
+
+The notebook downloads its datasets automatically and installs `medmnist` if needed. An internet connection is required; no Google Drive connection is needed. A GPU is recommended for Task 2: the notebook estimates about one minute for U-Net training on a GPU, or about 12 minutes on a CPU, plus data loading. Actual times depend on the runtime.
+
+### Datasets and models
+
+| Task | Dataset | Model and split |
+| --- | --- | --- |
+| 1. Chest X-ray classification | PneumoniaMNIST: children's chest X-rays, normal or pneumonia, loaded at 64 × 64 pixels | Logistic regression using every second pixel; 4,708 training, 524 validation, and 624 test images |
+| 2. Polyp segmentation | Kvasir-SEG: 1,000 colonoscopy images with expert masks, resized to 80 × 80 pixels | Small U-Net trained on 900 images and tested on 100 |
+
+Kvasir-SEG is used for research and education only. In the segmentation plots, **green** marks the expert mask and **magenta** marks the prediction.
+
+### Notebook sections
+
+| Section | Purpose | When |
+| --- | --- | --- |
+| 1.0 Classification | Complete the TP, FN, FP and TN counts in `rates`; compute accuracy, sensitivity and specificity; train the baseline model | At home |
+| 1.1 Training labels | Change `MISSED` to explore the effect of labelling some training pneumonia images as normal | In class |
+| 1.2 Decision thresholds | Use the validation slider to choose `threshold_A` and `threshold_B` for two clinical scenarios, then check them once on test data | In class |
+| 1.3 Shortcut learning | Compare synthetic hospital A/B conditions and cover an image corner to investigate reliance on a synthetic L marker | In class |
+| 2.0 Segmentation | Train the U-Net; complete `iou`, `mean_iou` and `n_failed`; inspect the five worst test images | At home |
+| 2.1 Judge overlap | Match four example masks to their IoU values, then enter the group's choices in `our_answer` | In class |
+| 2.2 Look behind the mean | Revisit the output of 2.0 to count cases with IoU below 0.1 and discuss failure types | In class |
+| 2.3 Stress test | Predict the effect of an image degradation, then measure mean IoU at six strengths from 0 to 1 | In class |
+
+For 1.2, scenario A targets sensitivity of at least **0.98** and scenario B targets specificity of at least **0.97** on validation data. These requirements may fail on the test set; comparing the two is part of the exercise.
+
+For 2.3, set `degradation` to one of `"smoke"`, `"reflection"`, `"blur"`, `"occlusion"`, or `"underexposure"` after recording a prediction. These are synthetic image changes. U-Net results can vary between training runs; slide values are reference results, not guaranteed outputs.
+
+### Running outside Colab
+
+Use a Jupyter notebook environment with Python 3 and these packages:
+
+```bash
+pip install numpy scipy matplotlib ipywidgets scikit-learn medmnist pillow torch
+```
+
+For GPU training, PyTorch must support the available GPU. If variables are undefined, rerun from the **Setup** cell and keep the cell order. Start Task 2's data loading and training early in class, since sections 2.2 and 2.3 depend on them.
+
+### Teaching notes and sources
+
+Discuss false negatives and false positives separately, choose thresholds on validation data, and inspect individual segmentation failures as well as the mean IoU. The hospital marker and image degradations are demonstrations; the models are educational examples, not validated clinical systems.
+
+- **PneumoniaMNIST:** Yang et al. (2023), MedMNIST v2; original chest X-rays from Kermany et al. (2018). The notebook identifies PneumoniaMNIST as CC BY 4.0.
+- **Kvasir-SEG:** Jha et al. (2020), expert-annotated polyp images. The notebook downloads the dataset from [Simula](https://datasets.simula.no/downloads/kvasir-seg.zip).
