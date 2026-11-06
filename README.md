@@ -1,4 +1,4 @@
-# Exercise 2.1 — Breast Cancer Data Exploration
+# AI in medical robotics
 
 A short teaching notebook for **AI in Medical Robotics**. Explore labelled data, try a simple classification rule, and compare a chosen threshold with one fitted to the data.
 
