@@ -1,24 +1,40 @@
 # AI in medical robotics
 
-A short teaching notebook for **AI in Medical Robotics**. Explore labelled data, try a simple classification rule, and compare a chosen threshold with one fitted to the data.
+Colab notebooks for the exercises in **AI in Medical Robotics**. This repository brings together the practical activities for the course, organised by exercise session. Each section below introduces the corresponding notebook, its learning goals, and how to run it. Further exercise notebooks will be added as the course progresses.
 
-**Notebook:** [exercise_2_1_improved.ipynb](exercise_2_1.ipynb)
+## Exercise notebooks
+
+| Session | Notebook contents | Notebook | Run |
+| --- | --- | --- | --- |
+| Exercise 02 — Task 1 | Breast cancer data exploration; threshold rules; knowledge-based and data-driven AI | [exercise_2_1.ipynb](exercise_2_1.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb) |
+| Exercise 03 — Medical Imaging and AI | Chest X-ray classification; decision thresholds and shortcut learning; polyp segmentation and robustness | [exercise_3.ipynb](exercise_3.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_3.ipynb) |
+
+## Getting started
+
+1. Choose the exercise in the table and click **Open in Colab**.
+2. Check the runtime recommendation in that exercise's section below.
+3. Run the notebook cells from top to bottom and follow its instructions, discussion prompts, and exercise-sheet references.
+4. To keep your edits, choose **File → Save a copy in Drive**.
+
+The notebooks load their own datasets. No separate Google Drive dataset connection is needed. Detailed task instructions are included in each notebook.
+
+## Exercise 02 — Task 1: Breast Cancer Data Exploration
+
+Explore the foundations of classification in **Task 1 of the Exercise 2 class**. Explore labelled data, try a simple classification rule, and compare a chosen threshold with one fitted to the data.
+
+**Notebook:** [exercise_2_1.ipynb](exercise_2_1.ipynb) · [Open in Google Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb)
 
 No prior programming experience is required. Students run the cells, inspect the plots, and change a few values. Allow approximately 20 minutes for exploration and discussion.
 
-**Also available:** [Exercise 03 — Medical Imaging and AI](#exercise-03--medical-imaging-and-ai), covering chest X-ray classification and polyp segmentation.
+### Run in Google Colab
 
-## Run in Google Colab
-
-1. Download `exercise_2_1.ipynb`.
-2. Open [Google Colab](https://colab.research.google.com/).
-3. Choose **File → Upload notebook** and select the file.
-4. Run the cells from top to bottom using the play buttons or `Shift+Enter`.
-5. Pause at the discussion prompts and use the results to answer Exercise 2.1.
+1. Open the notebook using the Colab link above. A CPU runtime is sufficient.
+2. Run the cells from top to bottom using the play buttons or `Shift+Enter`.
+3. Pause at the discussion prompts and use the results to answer Task 1 of the Exercise 2 class.
 
 The dataset loads through scikit-learn; no separate data file or Google Drive connection is needed. The notebook does not require a GPU.
 
-## Dataset
+### Dataset
 
 The Wisconsin Diagnostic Breast Cancer dataset contains **569 cases**: **357 Benign** and **212 Malignant**. Each row represents one case. The notebook uses four of the dataset's 30 features.
 
@@ -32,7 +48,7 @@ The Wisconsin Diagnostic Breast Cancer dataset contains **569 cases**: **357 Ben
 
 In Colab, the interactive table contains all 569 rows and displays 10 rows per page. Browsing, sorting, or filtering the displayed table does not change the data used by the plots. Outside Colab, a 10-row preview is shown instead.
 
-## Notebook sections
+### Notebook sections
 
 | Section | Purpose | Exercise connection |
 | --- | --- | --- |
@@ -45,10 +61,11 @@ In Colab, the interactive table contains all 569 rows and displays 10 rows per p
 | 7. Threshold rule | Try a cutoff and inspect both kinds of errors | Question 1: classification strategy |
 | 8. One case in, one prediction out | Apply the rule to a selected case | Question 1: input, rule, and output |
 | 9. Threshold search | Fit a threshold using known labels | Question 2: data-driven AI |
+| 9.1 Compare all four features (optional) | Compare four separately fitted single-feature rules | Training accuracy and error types |
 
-## Values students can change
+### Values students can change
 
-### Section 7: feature and threshold
+#### Section 7: feature and threshold
 
 ```python
 selected_feature = "radius_mean"
@@ -61,7 +78,7 @@ The available features are `radius_mean`, `texture_mean`, `perimeter_mean`, and 
 
 **After changing Section 7, rerun Sections 7–9 in order.** The single-case prediction and threshold comparison use the selected feature and threshold from Section 7.
 
-### Section 8: case index
+#### Section 8: case index
 
 ```python
 case_index = 0
@@ -69,7 +86,7 @@ case_index = 0
 
 Choose an integer from `0` to `568`. Try cases `0` and `3` with the default radius threshold. Rerun Section 8 after changing this value.
 
-## What the rule does
+### What the rule does
 
 The rule uses one selected feature:
 
@@ -90,7 +107,7 @@ With `radius_mean > 15.0`, the expected results are:
 
 Section 9 keeps the feature and rule form fixed. It evaluates thresholds between distinct observed values, plus cutoffs covering the two extreme predictions, and selects the first threshold with the highest accuracy. It does not automatically select features or learn a multi-feature model.
 
-## Teaching notes
+### Teaching notes
 
 Ask students to read the two exercise questions before exploring the plots. Pause after Sections 6, 7, and 8 to build the answer to Question 1. Use Section 9 to discuss Question 2.
 
@@ -104,7 +121,7 @@ Keep the following distinctions clear:
 
 This notebook is an educational example, not a validated clinical diagnostic system.
 
-## Running outside Colab
+### Running outside Colab
 
 Use a Jupyter notebook environment with Python 3 and these packages:
 
@@ -116,7 +133,7 @@ The plotting code uses the Seaborn 0.13 API or later. The paginated table is spe
 
 If a variable is undefined or results appear inconsistent, rerun the notebook from the first cell. If a feature change gives unexpected results, check the threshold's scale and rerun Sections 7–9.
 
-## Source
+### Source
 
 Wolberg, W., Mangasarian, O., Street, N., & Street, W. (1993). *Breast Cancer Wisconsin (Diagnostic)* [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B
 
