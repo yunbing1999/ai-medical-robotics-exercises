@@ -6,7 +6,7 @@ Colab notebooks for the exercises in **AI in Medical Robotics**. This repository
 
 | Session | Notebook contents | Notebook | Run |
 | --- | --- | --- | --- |
-| Exercise 02 — Task 1 | Breast cancer data exploration; threshold rules; knowledge-based and data-driven AI | [exercise_2_1.ipynb](exercise_2_1.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb) |
+| Exercise 02 — Data Classification | Breast cancer data exploration; threshold rules; knowledge-based and data-driven AI | [exercise_2_1.ipynb](exercise_2_1.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb) |
 | Exercise 03 — Medical Imaging and AI | Chest X-ray classification; decision thresholds and shortcut learning; polyp segmentation and robustness | [exercise_3.ipynb](exercise_3.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_3.ipynb) |
 
 ## Getting started
@@ -18,13 +18,13 @@ Colab notebooks for the exercises in **AI in Medical Robotics**. This repository
 
 The notebooks load their own datasets. No separate Google Drive dataset connection is needed. Detailed task instructions are included in each notebook.
 
-## Exercise 02 — Task 1: Breast Cancer Data Exploration
+## Exercise 02 — Data Classification
 
-Explore the foundations of classification in **Task 1 of the Exercise 2 class**. Explore labelled data, try a simple classification rule, and compare a chosen threshold with one fitted to the data.
+Explore labelled breast cancer data, try a simple classification rule, and compare a chosen threshold with one fitted to the data. This notebook supports **Task 1 of the Exercise 2 class**.
 
 **Notebook:** [exercise_2_1.ipynb](exercise_2_1.ipynb) · [Open in Google Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb)
 
-No prior programming experience is required. Students run the cells, inspect the plots, and change a few values. Allow approximately 20 minutes for exploration and discussion.
+No prior programming experience is required. Run the cells, inspect the plots, and change a few values. Plan approximately 20 minutes for exploration and discussion.
 
 ### Run in Google Colab
 
@@ -63,7 +63,7 @@ In Colab, the interactive table contains all 569 rows and displays 10 rows per p
 | 9. Threshold search | Fit a threshold using known labels | Question 2: data-driven AI |
 | 9.1 Compare all four features (optional) | Compare four separately fitted single-feature rules | Training accuracy and error types |
 
-### Values students can change
+### Values you can change
 
 #### Section 7: feature and threshold
 
@@ -107,11 +107,11 @@ With `radius_mean > 15.0`, the expected results are:
 
 Section 9 keeps the feature and rule form fixed. It evaluates thresholds between distinct observed values, plus cutoffs covering the two extreme predictions, and selects the first threshold with the highest accuracy. It does not automatically select features or learn a multi-feature model.
 
-### Teaching notes
+### Learning tips
 
-Ask students to read the two exercise questions before exploring the plots. Pause after Sections 6, 7, and 8 to build the answer to Question 1. Use Section 9 to discuss Question 2.
+Read the two exercise questions before exploring the plots. Use your observations from Sections 6–8 to answer Question 1, and compare the two approaches in Section 9 for Question 2.
 
-Keep the following distinctions clear:
+As you interpret your results, keep these points in mind:
 
 - **Correlation is not classification performance.** Highly correlated size features can carry overlapping information. Lower correlation does not prove that adding texture will improve predictions.
 - **Plots provide clues.** Boxplot overlap alone does not establish which feature gives the best classifier.
@@ -145,7 +145,7 @@ The notebook loads the dataset using `sklearn.datasets.load_breast_cancer`.
 
 **Notebook:** [exercise_3.ipynb](exercise_3.ipynb) · [Open in Google Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_3.ipynb)
 
-A teaching notebook for **AI in Medical Robotics, WS 2026/27**, Lecture 03. Explore which classification errors matter, what a model really learns, and which segmentation failures can hide behind a good average score.
+A practical exercise for **AI in Medical Robotics, WS 2026/27**, Lecture 03. Explore which classification errors matter, what a model really learns, and which segmentation failures can hide behind a good average score.
 
 ### Run in Google Colab
 
@@ -155,7 +155,7 @@ A teaching notebook for **AI in Medical Robotics, WS 2026/27**, Lecture 03. Expl
 4. Before the session, complete parts **1.0** and **2.0**. Fill in the short sections marked `YOUR CODE (home)`, run the check cells, and write predictions and answers on the exercise sheet.
 5. In class, run the notebook from the top using **Runtime → Run all**, then follow each activity and change the values marked `EDIT`.
 
-The check cells use reference implementations when the homework code is incomplete or incorrect, so students can still follow the activities. Use Colab's table of contents to jump to the matching section number on the exercise sheet and slides.
+The check cells use reference implementations when the homework code is incomplete or incorrect, so you can still follow the activities. Use Colab's table of contents to jump to the matching section number on the exercise sheet and slides.
 
 The notebook downloads its datasets automatically and installs `medmnist` if needed. An internet connection is required; no Google Drive connection is needed. A GPU is recommended for Task 2: the notebook estimates about one minute for U-Net training on a GPU, or about 12 minutes on a CPU, plus data loading. Actual times depend on the runtime.
 
@@ -195,9 +195,13 @@ pip install numpy scipy matplotlib ipywidgets scikit-learn medmnist pillow torch
 
 For GPU training, PyTorch must support the available GPU. If variables are undefined, rerun from the **Setup** cell and keep the cell order. Start Task 2's data loading and training early in class, since sections 2.2 and 2.3 depend on them.
 
-### Teaching notes and sources
+### Learning tips
 
-Discuss false negatives and false positives separately, choose thresholds on validation data, and inspect individual segmentation failures as well as the mean IoU. The hospital marker and image degradations are demonstrations; the models are educational examples, not validated clinical systems.
+When interpreting your results, compare false negatives and false positives separately. Choose thresholds on validation data, then check them on test data. For segmentation, inspect individual failures as well as the mean IoU.
+
+The hospital marker and image degradations are synthetic demonstrations. These models are educational examples, not validated clinical systems.
+
+### Sources
 
 - **PneumoniaMNIST:** Yang et al. (2023), MedMNIST v2; original chest X-rays from Kermany et al. (2018). The notebook identifies PneumoniaMNIST as CC BY 4.0.
 - **Kvasir-SEG:** Jha et al. (2020), expert-annotated polyp images. The notebook downloads the dataset from [Simula](https://datasets.simula.no/downloads/kvasir-seg.zip).
