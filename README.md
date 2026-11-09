@@ -217,14 +217,67 @@ Align two brain MRI images to see how a surgical robot could locate a target pla
 
 ### Run in Google Colab
 
-Open the notebook and run the **Setup** cell, then work through sections **1.1–1.3** in order. Plan about **30 minutes** at home. A CPU runtime is sufficient. Setup installs `nilearn` if needed, and the notebook loads the template automatically.
+1. Open the notebook using the Colab link above. A CPU runtime is sufficient.
+2. Run **Setup** and **Load the MRI slice, the landmarks and the computer's tools**. Setup installs `nilearn` if needed. The notebook loads the MRI template automatically.
+3. Work through Sections **1.1–1.3** in order. Use Colab's table of contents to jump to a section.
+4. Set the value marked `EDIT` and complete the one line marked `YOUR CODE`. Run the check cell to test your answer. If the check fails, the notebook uses a reference implementation so you can continue.
 
-| Section | What you will do |
+Plan about **30 minutes** at home. There is nothing to submit. Be ready to discuss what you observed in class.
+
+### Data and image overlays
+
+The exercise uses a 2D axial slice from the **MNI152 brain MRI template** at 1 mm resolution. The notebook generates the moving and fixed images from this template to simulate a change in head position and, later, local brain shift.
+
+| Term or marker | What it means |
 | --- | --- |
-| 1.1 Align by hand | Choose a challenge and use sliders to rotate and shift the moving image. Check the alignment using the mean error across nine landmarks. |
-| 1.2 Automatic rigid registration | Complete one line of code for mean squared difference, then step through the search and compare image similarity with landmark error. |
-| 1.3 Brain shift | Compare rigid registration with deformable registration using optical flow. Check the error at the surgical target as well as the mean across all nine landmarks. |
+| Fixed image (green) | The reference image that the moving image is aligned to |
+| Moving image (magenta) | The image that the registration transforms |
+| Grey in the overlay | Areas where the images agree |
+| Magenta circles and green crosses | Corresponding landmarks on the moving and fixed images |
+| Red star in Section 1.3 | The simulated surgical target's true location after brain shift |
+
+The notebook uses nine corresponding landmarks to evaluate alignment. Each landmark error is the distance between the aligned point and its reference position, measured in millimetres.
+
+### Notebook sections
+
+| Section | What you will do | What to look for |
+| --- | --- | --- |
+| 1.1 Align by hand | Choose a challenge and adjust one rotation and two shifts using sliders and fine-step buttons | Watch the overlay and see how the mean landmark error changes |
+| 1.2 Automatic rigid registration | Complete the mean squared difference function, then step through the computer's search | Compare the pixel-based score with the landmark error at each iteration |
+| 1.3 Brain shift | Run the simulated brain shift, then compare rigid alignment with a deformable warp estimated by optical flow | Compare the error at the target with the mean across all nine landmarks |
+
+### Values you can change
+
+In Section 1.1, set `CHALLENGE` to the last digit of your student number. Use **1** if the last digit is **9**. If you change the challenge later, rerun that cell and the cells below it.
+
+Use the three sliders to control rotation, vertical shift, and horizontal shift. The buttons beside the sliders adjust each value by 1 or 0.25 in either direction. Compare the mean landmark error before and after your manual alignment.
+
+### How automatic registration works
+
+The rigid search starts with no movement. At each iteration it tries small changes to the angle and the two shifts and keeps the change that most reduces the mean squared difference between the images. When no change helps, it halves the step size.
+
+In Section 1.2, implement `mean_squared_difference(a, b)` by comparing corresponding pixels, squaring their differences, and averaging over the image. In the iteration plot, blue shows the pixel-based score the algorithm minimises. Red shows the landmark error, which is calculated separately to evaluate the result.
 
 ### Learning tips
 
-The automatic rigid search uses pixel intensities. The landmarks are used to evaluate the alignment. Compare the error at the target with the mean landmark error to see how a local error can be hidden by an average.
+- **Rigid alignment moves the whole image together.** A rotation and two translations can compensate for a change in head position. Local brain shift calls for a model that can move different regions by different amounts.
+- **Deformable alignment estimates a displacement at each pixel.** In Section 1.3, optical flow estimates these displacements after rigid alignment. Follow the arrows to see how the warp changes the image near the target.
+- **Check the target as well as the mean.** The average across nine landmarks can hide a larger error at the surgical target. Compare both measurements before and after deformable registration.
+
+### Running outside Colab
+
+Use a Jupyter notebook environment with Python 3 and these packages:
+
+```bash
+pip install numpy scipy matplotlib ipywidgets ipython nilearn scikit-image
+```
+
+Use a notebook interface that supports `ipywidgets` for the sliders and iteration buttons. Run the cells in order, starting from **Setup**.
+
+### Sources
+
+- **MNI152 brain template:** Fonov et al. (2009, 2011), loaded through `nilearn`.
+- **Brain shift and target error:** Nimsky et al. (2000) and Fitzpatrick et al. (1998).
+- **Deformable registration:** TV-L1 optical flow, Zach et al. (2007), via scikit-image.
+
+Full references are listed at the end of the notebook.
