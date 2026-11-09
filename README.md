@@ -8,6 +8,7 @@ Colab notebooks for the exercises in **AI in Medical Robotics**. This repository
 | --- | --- | --- | --- |
 | Exercise 02 — Data Classification | Breast cancer data exploration; threshold rules; knowledge-based and data-driven AI | [exercise_2_1.ipynb](exercise_2_1.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_2_1.ipynb) |
 | Exercise 03 — Medical Imaging and AI | Chest X-ray classification; decision thresholds and shortcut learning; polyp segmentation and robustness | [exercise_3.ipynb](exercise_3.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_3.ipynb) |
+| Exercise 04 — Image Registration | Manual MRI alignment, rigid registration, and deformable registration for simulated brain shift | [exercise_4.ipynb](exercise_4.ipynb) | [Open in Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_4.ipynb) |
 
 ## Getting started
 
@@ -205,3 +206,25 @@ The hospital marker and image degradations are synthetic demonstrations. These m
 
 - **PneumoniaMNIST:** Yang et al. (2023), MedMNIST v2; original chest X-rays from Kermany et al. (2018). The notebook identifies PneumoniaMNIST as CC BY 4.0.
 - **Kvasir-SEG:** Jha et al. (2020), expert-annotated polyp images. The notebook downloads the dataset from [Simula](https://datasets.simula.no/downloads/kvasir-seg.zip).
+
+---
+
+## Exercise 04 — Image Registration
+
+**Notebook:** [exercise_4.ipynb](exercise_4.ipynb) · [Open in Google Colab](https://colab.research.google.com/github/yunbing1999/ai-medical-robotics-exercises/blob/main/exercise_4.ipynb)
+
+Align two brain MRI images to see how a surgical robot could locate a target planned before an operation. Start by aligning the images by hand, then compare automatic rigid and deformable registration. The notebook loads a slice from the MNI152 brain template and simulates head movement and brain shift.
+
+### Run in Google Colab
+
+Open the notebook and run the **Setup** cell, then work through sections **1.1–1.3** in order. Plan about **30 minutes** at home. A CPU runtime is sufficient. Setup installs `nilearn` if needed, and the notebook loads the template automatically.
+
+| Section | What you will do |
+| --- | --- |
+| 1.1 Align by hand | Choose a challenge and use sliders to rotate and shift the moving image. Check the alignment using the mean error across nine landmarks. |
+| 1.2 Automatic rigid registration | Complete one line of code for mean squared difference, then step through the search and compare image similarity with landmark error. |
+| 1.3 Brain shift | Compare rigid registration with deformable registration using optical flow. Check the error at the surgical target as well as the mean across all nine landmarks. |
+
+### Learning tips
+
+The automatic rigid search uses pixel intensities. The landmarks are used to evaluate the alignment. Compare the error at the target with the mean landmark error to see how a local error can be hidden by an average.
